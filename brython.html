@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Importing Brython -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/brython/3.8.9/brython.js" integrity="sha512-BAR4h9GYv1FQFrFFPUZWWC3U3LxtXPa+knXs8hmONJ3rttMojg+Rhe+hhs8ZeQBlUE5Yvyk/kzyTvkMyYzv9LA==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/brython/3.8.9/brython_stdlib.js" integrity="sha512-98bQRz29ChXmPAao4dTlsAoIjjhqxEkXB8iLJf+hG+iavNERYFofmrxEinSecJwIzMZA1Ek3UB6t/KQesCtOtQ==" crossorigin="anonymous"></script>
+
+    <!-- Styling -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <title>Bry.thon</title>
+</head>
+<body onload="brython()">
+    <h1>Brython - Python in the browser</h1>
+
+    <!-- I am gonna use alot of ID(#) since that is how I can select from the DOM using Python -->
+    <h2 id="hello">Hello</h2>
+    <button id="alert-btn">Alert & Insert</button>
+
+    <input type="text" id="text" placeholder="Put Something Here!">
+    <span id="output"></span>
+
+    <h2 id="greet">Hello {name}</h2>
+
+    <button id="joke-btn">Get Joke</button>
+    <div id="joke" class="card">Click the 'get joke' button</div>
+
+    <h2>Upload a text file here!</h2>
+    <input type="file" id="file-upload">
+    <br>
+    <textarea id="file-text" cols="60" rows="10"></textarea>
+
+    <div class="card">
+        <button id="rotate-btn">Rotate</button>
+        <div id="rotate-box" class="box"></div>
+    </div>
+
+    <h2>Saved Item: <span id="item"></span></h2>
+    <input type="text" id="item-input" placeholder="Add to Local Storage">
+    <button id="add-btn" >Add</button>
+    <button id="remove-btn" >Remove</button>
+
+    <!-- [Alert & DOM insert] -->
+    <!--
+        -> Ensure the type is set to 'text/python'.
+        -> ID of the first script is set to 'script0' since I am gonna use a lot of scripts. 
+        -> Use '#' instead of '//' or '/* */' to put a comment.
+    -->
+    <script type="text/python" id="script0">
+        from browser import document, console, alert
+        
+        def show(e):
+            console.log('Hello')
+            console.log(e)
+            alert('Hello World')
+            document['hello'] <= 'Hello World'
+        
+        document['alert-btn'].bind('click', show)
+    </script>
+
+    <!-- [Text Bind] -->
+    <script type="text/python" id="script1">
+        from browser import document, console
+        
+        def show_text(e):
+            # This will log everything being typed
+            console.log(e.target.value)
+            # This will show everything being typed
+            document['output'].textContent = e.target.value
+        
+        document['text'].bind('input', show_text)
+    </script>
+
+    <!-- [Template & Variable] -->
+    <script type="text/python" id="script2">
+        from browser import document
+        from browser.template import Template
+
+        # This will replace brackets ({name}) to whatever I put inside " name="" "
+        Template(document['greet']).render(name='Kevin Adhiguna')
+    </script>
+
+    <!-- [Ajax Call] -->
+    <script type="text/python" id="script3">
+        from browser import document, ajax, console
+
+        url = 'https://api.chucknorris.io/jokes/random'
+
+        def on_complete(req):
+            # console.log(req.responseText)
+            
+            import json
+            data = json.loads(req.responseText)
+            joke = data['value']
+            document['joke'].text = joke
+
+        def get_joke(e):
+            # Create a variable called request
+            req = ajax.ajax()            
+            
+            # Create a GET request to the url
+            req.open('GET', url, True)
+            
+            # Bind the request that has been sent. Then call a function : def on_complete()
+            req.bind('complete', on_complete)
+            document['joke'].text = 'Loading...'
+            
+            # Send the request
+            req.send()
+
+        document['joke-btn'].bind('click', get_joke)
+    </script>
+
+    <!-- [Load File Data] -->
+    <script type="text/python" id="script4">
+        from browser import document, window
+
+        def file_read(e):
+            def on_load(e):
+                document['file-text'].value = e.target.result
+
+            file = document['file-upload'].files[0]
+            reader = window.FileReader.new()
+            reader.readAsText(file)
+            reader.bind('load', on_load)
+
+        document['file-upload'].bind('input', file_read)
+    </script>
+
+    <!-- [Rotate - manipulate style] -->
+    <script type="text/python" id="script5">
+        from browser import document, html
+
+        # Assign a variable called 'box' to the element with id='rotate-box' 
+        box = document['rotate-box']
+        angle = 10
+
+        def change(e):
+            # Make 'angle' variable global 
+            global angle
+
+            # Rotate the box object
+            box.style.transform = f"rotate({angle}deg)"
+            angle += 10
+
+        # Everytime the element with id='rotate-btn' is clicked(onClickEvent), it will call the 'change' function.
+        document['rotate-btn'].bind('click', change)
+    </script>
+
+    <!-- [Local Storage] -->
+    <script type="text/python" id="script6">
+        from browser import document, html, window, console
+
+        # Assign a variable called 'storage' as localStorage in the browser
+        storage = window.localStorage
+
+        # Check to see if there is any item stored in local storage
+        if storage.getItem('item'):
+            document['item'] <= storage.getItem('item')
+
+        def add_item(e):
+            item = document['item-input'].value
+
+            # Check if the typed characters are logged or not
+            console.log(item)
+
+            # Store to local storage
+            storage.setItem('item', item)
+            document['item'].textContent = item
+
+        def remove_item(e):
+            # Remove from local storage
+            storage.removeItem('item')
+            document['item'].textContent = ''
+
+        document['add-btn'].bind('click', add_item)
+        document['remove-btn'].bind('click', remove_item)
+    </script>
+</body>
+</html>
