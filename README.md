@@ -41,3 +41,5 @@ Click the `rotate` button to see what will happen : <br><br>
 Upload a text file from your computer's directory : <br><br>
 <img src="https://raw.githubusercontent.com/kevinadhiguna/bry.thon/master/demo/7b.uploadText-2.png" width="40%"></img> <br><br>
 What is inside the text file will be revealed !
+
+[![Visits Badge](https://badges.pufler.dev/visits/kevinadhiguna/bry.thon`)](https://github.com/kevinadhiguna)
