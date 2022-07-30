@@ -3,12 +3,19 @@
 Bry.thon is an implementation of Python3 in a website by utilizing Brython. 
 Usually Javascript is used for client-side but with Brython, Python can do the same.
 
+<br />
+
 ## Demo
+
 This is how this app looks :
+
 <img src="https://raw.githubusercontent.com/kevinadhiguna/bry.thon/master/demo/1.png" width="90%"></img> 
 <img src="https://raw.githubusercontent.com/kevinadhiguna/bry.thon/master/demo/2.png" width="90%"></img> 
 
+<br />
+
 ## Features
+
 Here are some features :
 
 ### (1) Get a Random Joke
@@ -42,8 +49,12 @@ Upload a text file from your computer's directory : <br><br>
 <img src="https://raw.githubusercontent.com/kevinadhiguna/bry.thon/master/demo/7b.uploadText-2.png" width="40%"></img> <br><br>
 What is inside the text file will be revealed !
 
+<br />
+
 ## Reference
 
 - [Python In The Browser | Brython Crash Course by Traversy Media](https://youtu.be/VJj-H4we71g)
+
+<br />
 
 [![Visits Badge](https://badges.pufler.dev/visits/kevinadhiguna/bry.thon`)](https://github.com/kevinadhiguna)
