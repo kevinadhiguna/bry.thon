@@ -42,4 +42,8 @@ Upload a text file from your computer's directory : <br><br>
 <img src="https://raw.githubusercontent.com/kevinadhiguna/bry.thon/master/demo/7b.uploadText-2.png" width="40%"></img> <br><br>
 What is inside the text file will be revealed !
 
+## Reference
+
+- [Python In The Browser | Brython Crash Course by Traversy Media](https://youtu.be/VJj-H4we71g)
+
 [![Visits Badge](https://badges.pufler.dev/visits/kevinadhiguna/bry.thon`)](https://github.com/kevinadhiguna)
