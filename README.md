@@ -57,4 +57,4 @@ What is inside the text file will be revealed !
 
 <br />
 
-[![Visits Badge](https://badges.pufler.dev/visits/kevinadhiguna/bry.thon`)](https://github.com/kevinadhiguna)
+![Hello !](https://api.visitorbadge.io/api/VisitorHit?user=kevinadhiguna&repo=bry.thon&label=thanks%20for%20dropping%20in%20!&labelColor=%23000000&countColor=%23FFFFFF)
